@@ -1,0 +1,4 @@
+interface:
+  display_name: "Dev Automation MCP"
+  short_description: "MCP + Skills 个人开发自动化工作流"
+  default_prompt: "使用 dev-automation-mcp：先读项目上下文与 mistakes-ledger，必要时用 MCP 查证飞书/网页/官方文档，再做最小完整改动、验证与多轮审核，最后沉淀复盘。Use this skill to run a development task with MCP research, Feishu/web reading, mistake prevention, verification, and multi-round review."

@@ -1,62 +1,68 @@
 ---
 name: dev-automation-mcp
-description: MCP-backed personal development automation. Use when starting development work, researching Feishu or web materials, avoiding previously recorded mistakes, debugging systematically, reviewing a project across multiple rounds, or turning work into reusable project memory.
+description: "MCP + Skills 个人开发自动化工作流。用于开始开发任务、修 Bug、重构、接入功能，调研飞书/网页/官方文档，规避历史错误（mistakes-ledger），做多轮审核（需求/正确性/安全/测试/交付），以及会话复盘沉淀。触发词：开发任务、修 bug、重构、代码审核、上线检查、调研、读飞书文档、查官方文档、历史错误、复盘、多轮审核。Use for development tasks, debugging, refactoring, external research, multi-round review, and project memory."
+license: MIT
+compatibility: "需要 git；MCP 可选（sequential-thinking / fetch / playwright / context7 / lark-mcp）。无任何 MCP 时按降级规则工作。"
+metadata:
+  author: xnddwh
+  version: "1.1.0"
 ---
 
 # Dev Automation MCP
 
-Use this skill to combine MCP tools with repeatable development workflows. MCP provides external capabilities; this skill decides when and how to use them.
+MCP 提供能力，本 skill 提供流程。**先读上下文、再查证、再实现、再验证、再审核、最后沉淀。**
 
-## MCP Tool Policy
+## 硬规则（不可跳过）
 
-Prefer these MCP capabilities when available:
+1. **先读上下文再动手** —— 未读 `CLAUDE.md` 与 `mistakes-ledger.md` 不得改代码。
+2. **先查证再实现** —— 涉及外部事实（API、版本、库行为、产品决策、权限）必须先查，禁止凭记忆下结论。
+3. **区分事实与推断** —— 结论标注来源与置信度；无法核验的标「待确认」，不得补写。
+4. **最小完整改动** —— 匹配现有项目风格，不顺手重构无关代码。
+5. **验证命令优先** —— 改完必须跑最相关的测试/构建/lint/类型检查/浏览器验证；跑不了要明说为什么。
+6. **不编造来源** —— 无来源的结论标待确认；引用必须带出处与日期。
+7. **不提交密钥** —— 真实凭据只进用户级配置或环境变量。
+8. **事实先于立场** —— 发现计划或上一轮判断有误，直接说出来并给出修正。
 
-- `sequential-thinking`: break down ambiguous work, compare options, audit reasoning, and run multi-round review.
-- Feishu/Lark MCP: read product docs, design notes, team decisions, meeting notes, messages, wiki pages, and calendars.
-- Search MCP: discover external sources when facts, APIs, laws, package behavior, or versions may have changed.
-- Web reader/fetch MCP: read specific URLs and convert them into concise evidence.
-- Playwright MCP: inspect sites, reproduce browser flows, validate UI behavior, or run visual checks.
-- Context/library docs MCP: read current framework or SDK documentation before changing code that depends on it.
-- Memory MCP, when configured: retrieve and write durable rules, decisions, and repeated mistakes.
+## MCP 能力（可用则用，不可用则降级）
 
-If an MCP is unavailable, state the missing capability and use the best local fallback.
+| MCP | 用途 | 包名（2026-10 核实） |
+|---|---|---|
+| `sequential-thinking` | 任务拆解、方案权衡、多轮审核 | `@modelcontextprotocol/server-sequential-thinking` |
+| `fetch` | 读取指定 URL 并转为证据 | `@modelcontextprotocol/server-fetch` |
+| `playwright` | 浏览器操作、E2E、视觉验证 | `@playwright/mcp` |
+| `context7` | 查询框架/SDK 当前文档 | `@upstash/context7-mcp` |
+| `lark-mcp` | 飞书文档、知识库、会议记录、日历 | `@larksuiteoapi/lark-mcp` |
+| `github` | Issue / PR / 代码检索 | 官方远程 HTTP：`https://api.githubcopilot.com/mcp/` |
+| `brave-search` | 联网搜索 | `@modelcontextprotocol/server-brave-search`（**已停止维护**，优先用内置 WebSearch） |
 
-## Start Workflow
+**降级规则**：某个 MCP 不可用时，明确说出缺失的能力，再用本地文件、内置搜索或用户提供的资料替代。**不得假装查过。**
 
-For development tasks:
+配置细节见 `references/mcp-setup.md`。
 
-1. Read local context first: `CLAUDE.md`, `mistakes-ledger.md`, README, package files, related source, tests, and recent changes.
-2. Identify the target, constraints, unknown facts, likely failure modes, and validation command.
-3. Use MCP research before implementation if the task depends on Feishu docs, web pages, external APIs, third-party libraries, permissions, product decisions, or unstable facts.
-4. If `mistakes-ledger.md` has related entries, explicitly name the prevention rule that applies now.
-5. Implement the smallest coherent change that matches existing project patterns.
-6. Verify with the most relevant test, build, typecheck, lint, browser run, or API call.
-7. Run the multi-round audit before finalizing substantial work.
+## 开发任务流程
 
-## Research Workflow
+1. 读取 `CLAUDE.md`、`mistakes-ledger.md`、README、依赖文件、相关代码与测试、近期变更。
+2. 明确目标、约束、未知事实、可能的失败模式、验证命令。
+3. 若依赖飞书/网页/API/第三方库/权限/产品决策 → 先查证再设计。
+4. 若台账有同类错误 → **显式写出本次适用的预防规则**。
+5. 做最小完整改动。
+6. 跑验证命令。
+7. 重要改动执行多轮审核。
 
-For Feishu/web research:
+## 调研流程
 
-1. Convert the user request into concrete questions.
-2. Query project sources and Feishu first when the topic is product-specific.
-3. Query external search only for public docs, package behavior, examples, or current facts.
-4. Prefer official docs, source repositories, standards, API responses, and project tests over blogs.
-5. Record each important conclusion with source, date, version, and confidence.
-6. Separate facts from inferences.
-7. End with executable recommendations and remaining unknowns.
+1. 把问题拆成具体子问题。
+2. 产品/团队问题 → 先查项目文件与飞书；技术/版本问题 → 官方优先。
+3. 优先级：官方文档 > 源码仓库 > 标准/规范 > API 实际响应 > 项目测试 > 博客。
+4. 每条关键结论记录来源、日期、版本、置信度。
+5. 输出可执行建议 + 剩余未知项，不堆砌资料。
 
-Read `references/mcp-setup.md` when configuring MCP servers.
+## 错误台账
 
-## Mistake Prevention
-
-Always look for a project `mistakes-ledger.md`. If absent and the task is non-trivial, create one from this structure:
+每个项目维护 `mistakes-ledger.md`（模板见本仓库 `templates/`）：
 
 ```markdown
-# Mistakes Ledger
-
-## Entries
-
-### YYYY-MM-DD - Title
+### YYYY-MM-DD - 标题
 
 - Context:
 - Mistake:
@@ -66,26 +72,28 @@ Always look for a project `mistakes-ledger.md`. If absent and the task is non-tr
 - Verification next time:
 ```
 
-Before changing code, scan for related entries. After any material miss, failed assumption, repeated bug, or verification gap, append an entry.
+- 开始任务前必读。
+- 出现返工、误判、漏测、配置错误、来源错误后**立即追加**。
+- 同类任务再次出现时，必须显式引用对应预防规则。
 
-## Multi-Round Audit
+初始化（不覆盖已存在文件）：
 
-Run these rounds for substantial changes, project reviews, and release checks:
+```bash
+python scripts/init_project_memory.py <目标项目目录>
+```
 
-1. Requirement fit: user goal, product docs, scope, omissions, overreach.
-2. Code correctness: main path, edge cases, error handling, state, concurrency, resource cleanup.
-3. Data and security: auth, permissions, input validation, secrets, logs, migrations, rollback.
-4. Tests and regression: changed behavior, missing cases, fixture quality, deterministic checks.
-5. Delivery quality: docs, config, startup, environment, observability, residual risks.
+## 多轮审核（重要改动必做）
 
-Output findings by severity with file or source references where possible. Fix critical issues before finalizing unless the user asked only for review.
+1. **需求一致性**：是否解决真实目标，有无遗漏或过度实现。
+2. **代码正确性**：主路径、异常路径、边界、并发、状态、资源释放。
+3. **数据与安全**：鉴权、授权、输入校验、敏感信息、日志、迁移、回滚。
+4. **测试与回归**：覆盖风险、测试质量、构建与类型检查。
+5. **交付质量**：文档、配置、启动方式、可观测性、残余风险。
 
-## Session Retrospective
+输出按严重度排序并附文件/行号/来源。除非用户只要 review，否则**先修高危问题再交付**。
 
-At the end of meaningful work:
+## 会话复盘
 
-- State what changed and what was verified.
-- State what remains unverified.
-- Update `mistakes-ledger.md` for reusable prevention rules.
-- Update `CLAUDE.md` only for durable project knowledge, commands, architecture decisions, or recurring traps.
-
+- 说明改了什么、验证了什么、**还有什么没验证**。
+- 可复用的预防规则写入 `mistakes-ledger.md`。
+- 只有长期有效的项目知识（架构决策、常用命令、反复踩的坑）才写入 `CLAUDE.md`。

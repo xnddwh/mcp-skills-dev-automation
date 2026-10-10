@@ -25,37 +25,28 @@ Wiki        -> 可选，用于长期知识库
 4. 用 Issues 表达每个成长任务。
 5. 把 Issues 加入 Project 看板管理进度。
 
-## 推荐仓库名
+## 仓库名
 
-首选：
-
-```text
-mcp-skills-dev-automation
-```
-
-备选：
-
-```text
-personal-ai-dev-workflow
-dev-automation-mcp-skills
-ai-dev-ops-playbook
-```
+已定为 `mcp-skills-dev-automation`，不再讨论备选名。
 
 ## 建议仓库结构
 
 ```text
 mcp-skills-dev-automation/
   README.md
+  LICENSE
   mcp/
     mcp.example.json
     mcp.feishu-user-oauth.example.json
   skills/
-    dev-automation-mcp/
+    dev-automation-mcp/          # 单一真源
       SKILL.md
+      agents/openai.yaml
+      scripts/init_project_memory.py
       references/
         mcp-setup.md
     claude-code/
-      dev-automation-mcp.md
+      dev-automation-mcp.md      # 仅安装说明，不重复流程
   templates/
     CLAUDE.project-template.md
     mistakes-ledger.md

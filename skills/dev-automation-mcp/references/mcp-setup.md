@@ -1,8 +1,10 @@
-# MCP Setup Reference
+# MCP 配置参考
 
-Use MCP for capabilities, not workflow text. Keep workflows in skills.
+MCP 提供能力，不提供流程。流程一律写在 skill 里。
 
-## Recommended MCP Servers
+> 包名核对时间：2026-10-10。MCP 生态变动快，安装前以官方仓库 README 为准。
+
+## 推荐配置
 
 ```json
 {
@@ -17,18 +19,11 @@ Use MCP for capabilities, not workflow text. Keep workflows in skills.
     },
     "playwright": {
       "command": "npx",
-      "args": ["-y", "playwright-mcp"]
+      "args": ["-y", "@playwright/mcp@latest"]
     },
     "context7": {
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp"]
-    },
-    "brave-search": {
-      "command": "npx",
-      "args": ["-y", "@brave/brave-search-mcp-server", "--transport", "stdio"],
-      "env": {
-        "BRAVE_API_KEY": "REPLACE_WITH_BRAVE_API_KEY"
-      }
     },
     "lark-mcp": {
       "command": "npx",
@@ -50,17 +45,33 @@ Use MCP for capabilities, not workflow text. Keep workflows in skills.
 }
 ```
 
-## Feishu Access
+## 包名修正记录（2026-10-10）
 
-Use app identity for shared application-level resources. Use OAuth/user access token mode when the agent must access documents or resources only visible to the signed-in user.
+| 项 | 旧写法（有问题） | 现行写法 |
+|---|---|---|
+| Playwright | `playwright-mcp` | `@playwright/mcp`（微软官方） |
+| Brave Search | `@brave/brave-search-mcp-server` | `@modelcontextprotocol/server-brave-search`，且**该 server 已停止维护** |
+| GitHub | 未配置 | 官方推荐远程 HTTP：`https://api.githubcopilot.com/mcp/`（旧 npm 包 `@modelcontextprotocol/server-github` 已弃用） |
 
-Do not commit real App ID, App Secret, or API keys. Put real credentials in user-level MCP config or environment variables.
+**搜索建议**：优先用 agent 内置的 WebSearch / WebFetch，Brave MCP 只作补充。
 
-## Filesystem Safety
+## 各 agent 的配置位置
 
-Do not expose an entire disk or home directory through a filesystem MCP. Prefer one project root at a time.
+| Agent | 配置方式 |
+|---|---|
+| Claude Code | `claude mcp add <name> -- npx -y <pkg>`（用户级加 `-s user`） |
+| Codex | `~/.codex/config.toml` 的 `[mcp_servers]` |
+| WorkBuddy | `~/.workbuddy/mcp.json` |
+| Gemini CLI | `~/.gemini/settings.json` |
+| 通用 | 项目内 `.mcp.json`（**不得提交真实凭据**） |
 
-## Restart Rule
+## 安全
 
-After changing MCP config or installing skills, restart the Claude/Codex client so discovery reloads.
+- 不提交 App ID / App Secret / API Key；模板只放占位符。
+- 真实凭据放用户级配置或环境变量，配置里用 `${VAR}` 引用。
+- 文件系统 MCP 只开放当前项目目录，**不开放整个磁盘或用户根目录**。
+- 第三方 MCP 与第三方 skill 安装前先看一眼它的 `scripts/` —— 社区生态已出现投毒案例（恶意指令借 skill / MCP 注入）。
 
+## 生效规则
+
+改完 MCP 配置或安装新 skill 后，**重启客户端**才会重新发现。
