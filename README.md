@@ -31,6 +31,7 @@ python skills/my-first-agent/scripts/setup_my_agent.py <你的项目目录>
 | 装不上 / 装完没反应 | [`docs/INSTALL.md`](./docs/INSTALL.md)、[`docs/FAQ.md`](./docs/FAQ.md) |
 | 想提前知道哪儿会翻车 | [教程 06 新手常踩的坑](./docs/tutorials/06-pitfalls.md) |
 | 想要一份能贴墙上的清单 | [教程 07 最佳实践](./docs/tutorials/07-best-practices.md) |
+| skill 装多了，不知道该怎么理、怎么搭 | [Skill 分类与搭配推荐](./docs/SKILL-TAXONOMY.md) |
 | 要接外部工具（飞书/联网/浏览器） | [`docs/INSTALL.md`](./docs/INSTALL.md) 的 MCP 部分、[教程 03](./docs/tutorials/03-mcp-and-skills.md) |
 | 想知道后面还能怎么长 | [`docs/ROADMAP.md`](./docs/ROADMAP.md) |
 | 关心安全 | [`docs/SECURITY.md`](./docs/SECURITY.md) |
@@ -103,6 +104,8 @@ cp -R skills/my-first-agent ~/.claude/skills/my-first-agent
 - 仓库更名为 `rookie-agent-guide`，定位从「MCP + Skills 自动化」调整为「面向新手的入门指南」。
 - 新增 `docs/tutorials/` 八章教程体系，覆盖概念、原理、MCP 与 Skill、动手搭建、记忆与台账、常见坑、最佳实践、进阶；结论经 12 个来源交叉核对，清单在教程总览里。
 - 新增 `docs/INSTALL.md`、`docs/FAQ.md`。
+- 新增 `docs/SKILL-TAXONOMY.md`：按「作用对象」把 skill 分成四类（协作规范 / 领域专家 / 产出加工 / 系统操作），
+  给出三步判类法、四套搭配方案（应试闭环 / 内容生产 / 工程开发 / 生产运维）与四条搭配原则。
 - 结构调整：`skills/claude-code/`（放的是安装说明，不是 skill）挪并进 `docs/INSTALL.md`，避免污染 skill 扫描；`GROWTH_ROADMAP.md` → `ROADMAP.md`，`GITHUB_SETUP.md` → `REPO_SETUP.md`；新增 Phase 0 新手教程体系。
 - 修正 `mcp/mcp.example.json`：Playwright 包名改为 `@playwright/mcp`，Brave 标注为已停止维护，补充 GitHub 官方远程 MCP——之前这个示例文件和 `references/mcp-setup.md` 里的写法是矛盾的。
 

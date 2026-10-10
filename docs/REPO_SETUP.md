@@ -29,6 +29,7 @@ rookie-agent-guide/
   docs/
     INSTALL.md                  # 各 agent 安装方式
     FAQ.md                      # 常见问题
+    SKILL-TAXONOMY.md           # skill 分类与搭配推荐
     SECURITY.md                 # 安全原则
     ROADMAP.md                  # 成长路线图
     REPO_SETUP.md               # 本文件
