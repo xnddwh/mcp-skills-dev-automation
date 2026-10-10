@@ -40,7 +40,7 @@ python skills/my-first-agent/scripts/setup_my_agent.py <你的项目目录>
 
 仓库里就两个 skill，正好是新手和进阶的两端：
 
-| | `my-first-agent` | `dev-automation-mcp` |
+| | [my-first-agent](./skills/my-first-agent/) | [dev-automation-mcp](./skills/dev-automation-mcp/) |
 |---|---|---|
 | 是什么 | 新手版 | 完整版 |
 | 流程 | 3 步循环 | 7 步流程 + 5 轮审核 |
@@ -106,6 +106,7 @@ cp -R skills/my-first-agent ~/.claude/skills/my-first-agent
 - 新增 `docs/INSTALL.md`、`docs/FAQ.md`。
 - 新增 `docs/SKILL-TAXONOMY.md`：按「作用对象」把 skill 分成四类（协作规范 / 领域专家 / 产出加工 / 系统操作），
   给出三步判类法、四套搭配方案（应试闭环 / 内容生产 / 工程开发 / 生产运维）与四条搭配原则。
+  文中的 skill 一律以**来源链接**呈现（不收录他人文件），查不到公开来源的显式标注，不编链接。
 - 结构调整：`skills/claude-code/`（放的是安装说明，不是 skill）挪并进 `docs/INSTALL.md`，避免污染 skill 扫描；`GROWTH_ROADMAP.md` → `ROADMAP.md`，`GITHUB_SETUP.md` → `REPO_SETUP.md`；新增 Phase 0 新手教程体系。
 - 修正 `mcp/mcp.example.json`：Playwright 包名改为 `@playwright/mcp`，Brave 标注为已停止维护，补充 GitHub 官方远程 MCP——之前这个示例文件和 `references/mcp-setup.md` 里的写法是矛盾的。
 
