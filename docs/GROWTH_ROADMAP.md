@@ -5,7 +5,7 @@
 | 阶段 | 状态 |
 |---|---|
 | Phase 1 基础可用 | ✅ 已完成 |
-| Phase 2 专项 Skills | ⬜ 待办 |
+| Phase 2 专项 Skills | 🟡 进行中（`my-first-agent` 已完成） |
 | Phase 3 MCP 能力扩展 | 🟡 部分（GitHub、搜索待接入） |
 | Phase 4 项目知识库 | ⬜ 待办 |
 | Phase 5 自动化治理 | ⬜ 待办 |
@@ -36,6 +36,8 @@
 
 建议新增：
 
+- `my-first-agent`：✅ 已完成（2026-10-10）。面向初学者的极简 agent：三步循环 +
+  交互式引导脚本，作为 `dev-automation-mcp` 的低门槛入口；完整版是它的超集，升级路径写在 beginner-guide。
 - `systematic-debugging`：复杂 Bug 排查。
 - `release-check`：上线前质量检查。
 - `api-contract-review`：接口契约和兼容性审核。

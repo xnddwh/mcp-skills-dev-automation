@@ -19,6 +19,21 @@ cp -R skills/dev-automation-mcp ~/.claude/skills/dev-automation-mcp
 
 常用落点：`~/.claude/skills/`（Claude Code）、`~/.codex/skills/`（Codex）、`~/.hermes/skills/`（Hermes）、`~/.agents/skills/`（Codex/Gemini/Copilot/OpenCode 共享目录）。
 
+## 新手从这里开始
+
+第一次接触 agent？先不要看完整版，从 **`skills/my-first-agent/`** 开始：
+
+```bash
+# 回答 4 个问题，生成你自己的三个起步文件（AGENT.md / mistakes-ledger.md / first-tasks.md）
+python skills/my-first-agent/scripts/setup_my_agent.py <你的项目目录>
+```
+
+然后把 `skills/my-first-agent/` 复制到你所用 agent 的 skills 目录，对它说
+「使用 my-first-agent，完成 first-tasks.md 里的任务 1」。
+
+三步循环：**说清楚 → 先读记忆 → 做完记录**。三周熟练后升级 `dev-automation-mcp`，
+生成的 `AGENT.md` 可直接并入 `CLAUDE.md`（格式兼容）。详见 `skills/my-first-agent/references/beginner-guide.md`。
+
 ## 当前模式
 
 本项目采用三层结构：
@@ -164,6 +179,11 @@ skills/
     references/mcp-setup.md
   claude-code/
     dev-automation-mcp.md            # 仅安装说明
+  my-first-agent/                    # 新手版（零依赖，三步循环）
+    SKILL.md
+    agents/openai.yaml
+    scripts/setup_my_agent.py
+    references/beginner-guide.md
 templates/
   CLAUDE.project-template.md
   mistakes-ledger.md
@@ -178,6 +198,14 @@ docs/
 成长方向与阶段状态见 `docs/GROWTH_ROADMAP.md`。
 
 ## 修订记录
+
+### 2026-10-10（二）
+
+- 新增 `skills/my-first-agent/`：面向初学者的极简个人 agent。
+  - 与 `dev-automation-mcp` 的衔接：它是完整版的**子集**（三步循环 ⊂ 七步流程 + 五轮审核），
+    复用同一份 `templates/mistakes-ledger.md`，升级时 `AGENT.md` 直接并入 `CLAUDE.md`。
+  - 新增交互式引导脚本 `setup_my_agent.py`（支持 `--answers` 非交互模式，幂等不覆盖）。
+- 归档入口更新：本仓库 skill 已收入 `E:\SkillsHub`（含各 agent 本地已装副本）。
 
 ### 2026-10-10
 

@@ -1,0 +1,4 @@
+interface:
+  display_name: "My First Agent"
+  short_description: "新手版个人 agent：三步循环上手 AI 开发协作"
+  default_prompt: "使用 my-first-agent：先读 AGENT.md 与 mistakes-ledger.md，确认任务目标和完成标准后再动手，做完后把结果或教训记录下来。Use this beginner skill to run a task with the minimal three-step loop."
