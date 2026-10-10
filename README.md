@@ -76,8 +76,6 @@ python skills/my-first-agent/scripts/setup_my_agent.py <你的项目目录>
 npx skills add xnddwh/rookie-agent-guide --skill my-first-agent -g -a '*'
 ```
 
-> 仓库名正在从 `mcp-skills-dev-automation` 迁移到 `rookie-agent-guide`，改名生效前请把命令里的仓库名换成旧地址。
-
 不装 CLI，手动复制也一样：
 
 ```bash
@@ -190,6 +188,11 @@ rookie-agent-guide/
 二次发布的话，改一下作者信息就行。
 
 ## 修订记录
+
+### 2026-10-10（五）
+
+- GitHub 仓库改名生效：`mcp-skills-dev-automation` → `rookie-agent-guide`。旧地址会 301 跳转。
+- 移除 README 里的迁移注，本地 remote 已同步新地址。
 
 ### 2026-10-10（四）
 
