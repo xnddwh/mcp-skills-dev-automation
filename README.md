@@ -32,6 +32,7 @@ python skills/my-first-agent/scripts/setup_my_agent.py <你的项目目录>
 | 想提前知道哪儿会翻车 | [教程 06 新手常踩的坑](./docs/tutorials/06-pitfalls.md) |
 | 想要一份能贴墙上的清单 | [教程 07 最佳实践](./docs/tutorials/07-best-practices.md) |
 | skill 装多了，不知道该怎么理、怎么搭 | [Skill 分类与搭配推荐](./docs/SKILL-TAXONOMY.md) |
+| 想边做边学，要练习项目 | [练习项目](./docs/tutorials/practice/README.md) 13 个分级练习 |
 | 要接外部工具（飞书/联网/浏览器） | [`docs/INSTALL.md`](./docs/INSTALL.md) 的 MCP 部分、[教程 03](./docs/tutorials/03-mcp-and-skills.md) |
 | 想知道后面还能怎么长 | [`docs/ROADMAP.md`](./docs/ROADMAP.md) |
 | 关心安全 | [`docs/SECURITY.md`](./docs/SECURITY.md) |
