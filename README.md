@@ -187,32 +187,9 @@ rookie-agent-guide/
 
 二次发布的话，改一下作者信息就行。
 
-## 修订记录
+## 更新记录
 
-### 2026-10-10（五）
-
-- GitHub 仓库改名生效：`mcp-skills-dev-automation` → `rookie-agent-guide`。旧地址会 301 跳转。
-- 移除 README 里的迁移注，本地 remote 已同步新地址。
-
-### 2026-10-10（四）
-
-- 按项目实际功能重写 README：补项目简介、核心功能、使用示例、完整目录结构。
-
-### 2026-10-10（三）
-
-- 仓库更名为 `rookie-agent-guide`，定位调整为「面向新手的入门指南」。
-- 新增八章教程 + 13 个分级练习 + Skill 分类与搭配推荐 + INSTALL/FAQ。
-- 全部教程加三档标注（🖐️ 亲手做 / 🔬 自行验证 / ✅ AI 可代劳），补评测与学习路径两个缺口。
-- 结构调整：`skills/claude-code/` 并进 `docs/INSTALL.md`；文档改名归类；新增 Phase 0。
-- 修正 `mcp/mcp.example.json` 与 `references/mcp-setup.md` 的包名矛盾。
-
-### 2026-10-10（二）
-
-- 新增 `skills/my-first-agent/`：零依赖、三步循环的新手版，含交互式引导脚本。
-
-### 2026-10-10
-
-- 修正 MCP 包名，`SKILL.md` 补齐标准字段与 8 条硬规则，新增项目记忆初始化脚本，补 `LICENSE`。
+- 2026-10-10：仓库更名 `rookie-agent-guide`；新增八章教程、13 个分级练习与 Skill 分类指南；README 重写。更早的改动看 git 提交历史。
 
 ## License
 
