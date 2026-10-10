@@ -1,4 +1,5 @@
 {
+  "_comment": "MCP 配置模板。复制到你的 agent 配置里，把 REPLACE_WITH_* 换成真实值；真实凭据不要提交。包名核对时间 2026-10-10 —— MCP 生态变动快，安装前以官方仓库 README 为准。详细说明见 skills/dev-automation-mcp/references/mcp-setup.md。",
   "mcpServers": {
     "sequential-thinking": {
       "command": "npx",
@@ -10,18 +11,11 @@
     },
     "playwright": {
       "command": "npx",
-      "args": ["-y", "playwright-mcp"]
+      "args": ["-y", "@playwright/mcp@latest"]
     },
     "context7": {
       "command": "npx",
       "args": ["-y", "@upstash/context7-mcp"]
-    },
-    "brave-search": {
-      "command": "npx",
-      "args": ["-y", "@brave/brave-search-mcp-server", "--transport", "stdio"],
-      "env": {
-        "BRAVE_API_KEY": "REPLACE_WITH_BRAVE_API_KEY"
-      }
     },
     "lark-mcp": {
       "command": "npx",
@@ -38,6 +32,19 @@
         "-l",
         "zh"
       ]
+    },
+    "github": {
+      "_comment": "官方远程 HTTP 服务器。旧 npm 包 @modelcontextprotocol/server-github 已弃用；各客户端写法和本地 stdio 略有不同，以官方 README 为准。",
+      "type": "http",
+      "url": "https://api.githubcopilot.com/mcp/"
+    },
+    "brave-search": {
+      "_comment": "⚠️ 官方 server 已停止维护，优先用 agent 内置的 WebSearch。保留此项仅作参考。",
+      "command": "npx",
+      "args": ["-y", "@modelcontextprotocol/server-brave-search", "--transport", "stdio"],
+      "env": {
+        "BRAVE_API_KEY": "REPLACE_WITH_BRAVE_API_KEY"
+      }
     }
   }
 }

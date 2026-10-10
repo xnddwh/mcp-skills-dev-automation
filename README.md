@@ -1,234 +1,118 @@
-# Personal AI Development Automation
+# Rookie Agent Guide · 菜鸟 Agent 入门
 
-一个面向个人开发者的 MCP + Skills 工作流项目。它把外部工具能力交给 MCP，把可复用的开发方法沉淀为 Skills，让 AI Agent 在开发任务中稳定完成：自动思考、资料检索、飞书/网页阅读、历史错误规避、多轮审核和复盘沉淀。
+给完全没碰过 AI Agent 的人，一套能自己走完的路。
 
-Skill 遵循 **Agent Skills 开放标准**（`SKILL.md` + `scripts/` + `references/`），因此写一次即可装进 Claude Code、Codex、Cursor、Gemini CLI、Hermes 等 75+ 个 agent。
+不吹概念，也不假设你懂什么。你只要有台电脑、会用终端敲几行命令，就能从「这是啥」一路走到「我搭起来一个自己的」。
 
-## 一键安装
+## 15 分钟，先跑起来
 
-```bash
-# 装到所有已安装的 agent（全局）
-npx skills add xnddwh/mcp-skills-dev-automation --skill dev-automation-mcp -g -a '*'
-
-# 只装 Claude Code
-npx skills add xnddwh/mcp-skills-dev-automation --skill dev-automation-mcp -a claude-code -g
-
-# 手动方式：复制目录到目标 agent 的 skills 目录
-cp -R skills/dev-automation-mcp ~/.claude/skills/dev-automation-mcp
-```
-
-常用落点：`~/.claude/skills/`（Claude Code）、`~/.codex/skills/`（Codex）、`~/.hermes/skills/`（Hermes）、`~/.agents/skills/`（Codex/Gemini/Copilot/OpenCode 共享目录）。
-
-## 新手从这里开始
-
-第一次接触 agent？先不要看完整版，从 **`skills/my-first-agent/`** 开始：
+别读文档了，先动手。打开终端，把 `<你的项目目录>` 换成你自己的路径：
 
 ```bash
-# 回答 4 个问题，生成你自己的三个起步文件（AGENT.md / mistakes-ledger.md / first-tasks.md）
+# 1. 生成你的三个起步文件（AGENT.md / mistakes-ledger.md / first-tasks.md）
 python skills/my-first-agent/scripts/setup_my_agent.py <你的项目目录>
+
+# 2. 回答 4 个问题（或者直接回车用默认值）
+# 3. 把 skills/my-first-agent/ 复制到你所用 agent 的 skills 目录
+# 4. 重启 agent 客户端，然后对它说：
+#    「使用 my-first-agent，完成 first-tasks.md 里的任务 1」
 ```
 
-然后把 `skills/my-first-agent/` 复制到你所用 agent 的 skills 目录，对它说
-「使用 my-first-agent，完成 first-tasks.md 里的任务 1」。
+跑完你会得到一个属于你自己的 agent。它简单，但它不是玩具——那个「说清楚 → 先读记忆 → 做完记录」的三步循环，是你以后所有自动化流程的骨架。
 
-三步循环：**说清楚 → 先读记忆 → 做完记录**。三周熟练后升级 `dev-automation-mcp`，
-生成的 `AGENT.md` 可直接并入 `CLAUDE.md`（格式兼容）。详见 `skills/my-first-agent/references/beginner-guide.md`。
+**装完没反应？** 一定是没重启客户端。这是新手第一大坑，我在 `docs/FAQ.md` 里把这类问题都收好了。
 
-## 当前模式
+## 仓库里有什么
 
-本项目采用三层结构：
+| 你想干什么 | 去这儿 |
+|---|---|
+| 完全零基础，先看懂概念 | [`docs/tutorials/`](./docs/tutorials/README.md) 八章教程，建议从 01 顺着读 |
+| 想尽快动手 | [教程 04](./docs/tutorials/04-build-your-first-agent.md)，或者上面那 15 分钟 |
+| 装不上 / 装完没反应 | [`docs/INSTALL.md`](./docs/INSTALL.md)、[`docs/FAQ.md`](./docs/FAQ.md) |
+| 想提前知道哪儿会翻车 | [教程 06 新手常踩的坑](./docs/tutorials/06-pitfalls.md) |
+| 想要一份能贴墙上的清单 | [教程 07 最佳实践](./docs/tutorials/07-best-practices.md) |
+| 要接外部工具（飞书/联网/浏览器） | [`docs/INSTALL.md`](./docs/INSTALL.md) 的 MCP 部分、[教程 03](./docs/tutorials/03-mcp-and-skills.md) |
+| 想知道后面还能怎么长 | [`docs/ROADMAP.md`](./docs/ROADMAP.md) |
+| 关心安全 | [`docs/SECURITY.md`](./docs/SECURITY.md) |
 
-```text
-MCP Servers          -> 提供真实工具能力
-Skills              -> 固化可复用工作流程
-Project Memory      -> 保存项目上下文、经验和历史错误
-```
+## 两个 skill，一条升级路线
 
-### 1. MCP 工具层
+仓库里就两个 skill，正好是新手和进阶的两端：
 
-MCP 负责"能做什么"：
+| | `my-first-agent` | `dev-automation-mcp` |
+|---|---|---|
+| 是什么 | 新手版 | 完整版 |
+| 流程 | 3 步循环 | 7 步流程 + 5 轮审核 |
+| 依赖 | 无，零依赖 | 建议配 5 个 MCP |
+| 适合 | 第 1~4 周 | 已经顺手、要碰真项目之后 |
 
-- `sequential-thinking`：复杂任务拆解、多轮思考、方案审核。
-- `fetch`：读取网页资料和指定 URL。
-- `playwright`：浏览器自动化、页面交互、端到端验证。
-- `context7`：查询当前库、框架和 SDK 文档。
-- `lark-mcp`：读取飞书文档、知识库、团队资料和协作信息。
+关键的一点：**新手版是完整版严格的子集**。升级不是推倒重来，是长出来。你 `AGENT.md` 里攒的内容直接并进 `CLAUDE.md` 就行（格式兼容），错误台账更是同一个文件，一个字都不用改。
 
-后续可扩展：
+所以别急着上完整版。先把三步循环走熟，等你真的开始需要「查外部资料」「做多轮审核」了，再升。
 
-- GitHub MCP：Issue、PR、仓库管理、代码审查（官方远程 HTTP）。
-- Database MCP：开发库查询和数据验证。
-- Memory MCP：跨项目长期记忆。
-- Figma MCP：前端设计稿还原。
+## 装上它
 
-搜索优先使用 agent 内置的 WebSearch / WebFetch；Brave MCP 的官方 server 已停止维护，只作补充。
-
-### 2. Skills 流程层
-
-Skills 负责"应该怎么做"。
-
-当前核心 Skill：
-
-```text
-dev-automation-mcp
-```
-
-它要求 Agent 在开发任务中遵循固定流程：
-
-1. 读取项目上下文：`CLAUDE.md`、README、依赖文件、相关代码和测试。
-2. 读取历史错误：`mistakes-ledger.md`。
-3. 判断是否需要外部资料：飞书、网页、库文档、搜索结果。
-4. 先核实事实，再设计方案。
-5. 按项目风格做最小完整实现。
-6. 运行相关测试、构建、lint、类型检查或浏览器验证。
-7. 做多轮审核。
-8. 把可复用经验写回项目记忆或错误台账。
-
-**单一真源**：流程只维护在 `skills/dev-automation-mcp/SKILL.md`。`skills/claude-code/dev-automation-mcp.md` 只是安装说明，不重复流程内容。
-
-### 3. 项目记忆层
-
-每个项目建议包含：
-
-```text
-CLAUDE.md
-mistakes-ledger.md
-docs/adr/
-```
-
-- `CLAUDE.md`：项目目标、技术栈、架构约束、常用命令、坑点。
-- `mistakes-ledger.md`：历史错误、根因、发现信号、预防规则、下次验证方式。
-- `docs/adr/`：重要架构决策记录。
-
-一键初始化（不覆盖已存在文件）：
+用统一定位安装器，一条命令装到所有已安装的 agent：
 
 ```bash
-python skills/dev-automation-mcp/scripts/init_project_memory.py <项目目录>
+npx skills add xnddwh/rookie-agent-guide --skill my-first-agent -g -a '*'
 ```
 
-## 使用方式
+不想装 CLI，手动复制文件夹也一样：
 
-重启客户端后，直接在任务中要求使用该 Skill：
-
-```text
-使用 dev-automation-mcp，先读项目上下文和 mistakes-ledger，再结合飞书/网页资料完成这个任务，并在最后做多轮审核。
+```bash
+cp -R skills/my-first-agent ~/.claude/skills/my-first-agent
 ```
 
-示例：
+常用落点：`~/.claude/skills/`（Claude Code）、`~/.codex/skills/`（Codex）、`~/.hermes/skills/`（Hermes）、`~/.agents/skills/`（Codex / Gemini / Copilot / OpenCode 共享）。
 
-```text
-使用 dev-automation-mcp，读取飞书需求文档，修复登录页移动端无法提交的问题。
-使用 dev-automation-mcp，对当前项目做上线前多轮审核。
-使用 dev-automation-mcp，结合 Context7 和官方文档调研这个 SDK 的接入方式。
-```
+各工具更细的步骤、MCP 配置、排错，全在 [`docs/INSTALL.md`](./docs/INSTALL.md)。
 
-## 多轮审核标准
+## 为什么是 Skill 的形式
 
-每次重要变更至少审核五轮：
+这里的东西都遵循 **Agent Skills 开放标准**：一个 `SKILL.md` 加上可选的 `scripts/` 和 `references/`。好处很实在——**写一次，75 个以上的 agent 都能用**，不用给每个工具各维护一份。
 
-1. 需求一致性：是否解决真实目标，是否遗漏明确要求。
-2. 代码正确性：主路径、异常路径、边界条件、并发、资源释放。
-3. 数据与安全：鉴权、授权、输入校验、敏感信息、日志、迁移和回滚。
-4. 测试与回归：测试覆盖、构建、类型检查、浏览器或 API 验证。
-5. 交付质量：文档、配置、启动方式、可观测性和残余风险。
+这也是我为什么把流程单独拎出来当卖点：它不绑定 Claude Code，也不绑定 Codex，你哪天换工具了，这些 skill 跟着你走。
 
-## 历史错误规避
+## 安全
 
-`mistakes-ledger.md` 使用以下格式：
+这个仓库会连飞书、网页、浏览器这些外部东西，所以边界得说清楚。三条最要紧的：
 
-```markdown
-### YYYY-MM-DD - 标题
+- 不提交真实密钥，模板里只有占位符。
+- 文件系统权限只开放当前项目目录，不开放整个磁盘。
+- 装第三方 skill 之前，先把它读一遍——社区已经出现过投毒案例。
 
-- Context:
-- Mistake:
-- Root cause:
-- Detection signal:
-- Prevention rule:
-- Verification next time:
-```
+完整原则在 [`docs/SECURITY.md`](./docs/SECURITY.md)。
 
-规则：
+## 许可与使用
 
-- 开始任务前必须读取。
-- 出现返工、误判、漏测、配置错误、资料来源错误时必须追加。
-- 下次遇到同类任务时，Agent 必须显式引用对应预防规则。
+简单说：**拿去用，随便改，不用问。**
 
-## 安全原则
+- **许可证**：MIT。个人使用、修改、再分发、甚至商用都可以，只要保留 `LICENSE` 文件。
+- **当作个人项目**：完全可以。这本就是给你自己攒工作流用的仓库，不是某个平台的官方产物。
+- **第三方内容**：文档里提到的 MCP 包名、工具名属于**事实性指名引用**，不涉及转载或复制他人的受版权保护内容。
+- **教程内容**：基于多份公开资料交叉核对后重新撰写的，不是搬运。我参考的 12 个来源和它们的观点分歧，都列在 [`docs/tutorials/README.md`](./docs/tutorials/README.md) 里，你可以自己去核对。
+- **代码**：脚本只用各自语言的标准库，没有引入任何第三方代码或依赖。
 
-- 不提交真实 API Key、App Secret、Token。
-- MCP 配置模板只放占位符，真实凭据走用户级配置或环境变量。
-- 文件系统 MCP 不开放整个磁盘或用户根目录，只开放当前项目目录。
-- 飞书权限从最小权限开始授权。
-- 第三方 skill / MCP 安装前先看它的 `scripts/` —— 社区已出现投毒案例。
-
-详见 `docs/SECURITY.md`。
-
-## 仓库结构
-
-```text
-README.md
-LICENSE                              # MIT
-mcp/
-  mcp.example.json
-  mcp.feishu-user-oauth.example.json
-skills/
-  dev-automation-mcp/                # 单一真源
-    SKILL.md
-    agents/openai.yaml               # Codex 展示名与默认提示词
-    scripts/init_project_memory.py
-    references/mcp-setup.md
-  claude-code/
-    dev-automation-mcp.md            # 仅安装说明
-  my-first-agent/                    # 新手版（零依赖，三步循环）
-    SKILL.md
-    agents/openai.yaml
-    scripts/setup_my_agent.py
-    references/beginner-guide.md
-templates/
-  CLAUDE.project-template.md
-  mistakes-ledger.md
-docs/
-  GROWTH_ROADMAP.md
-  GITHUB_SETUP.md
-  SECURITY.md
-```
-
-## 路线图
-
-成长方向与阶段状态见 `docs/GROWTH_ROADMAP.md`。
+如果你要在此基础上二次发布，改一下作者信息就行。
 
 ## 修订记录
 
+### 2026-10-11
+
+- 仓库更名为 `rookie-agent-guide`，定位从「MCP + Skills 自动化」调整为「面向新手的入门指南」。
+- 新增 `docs/tutorials/` 八章教程体系，覆盖概念、原理、MCP 与 Skill、动手搭建、记忆与台账、常见坑、最佳实践、进阶；结论经 12 个来源交叉核对，清单在教程总览里。
+- 新增 `docs/INSTALL.md`、`docs/FAQ.md`。
+- 结构调整：`skills/claude-code/`（放的是安装说明，不是 skill）挪并进 `docs/INSTALL.md`，避免污染 skill 扫描；`GROWTH_ROADMAP.md` → `ROADMAP.md`，`GITHUB_SETUP.md` → `REPO_SETUP.md`；新增 Phase 0 新手教程体系。
+- 修正 `mcp/mcp.example.json`：Playwright 包名改为 `@playwright/mcp`，Brave 标注为已停止维护，补充 GitHub 官方远程 MCP——之前这个示例文件和 `references/mcp-setup.md` 里的写法是矛盾的。
+
 ### 2026-10-10（二）
 
-- 新增 `skills/my-first-agent/`：面向初学者的极简个人 agent。
-  - 与 `dev-automation-mcp` 的衔接：它是完整版的**子集**（三步循环 ⊂ 七步流程 + 五轮审核），
-    复用同一份 `templates/mistakes-ledger.md`，升级时 `AGENT.md` 直接并入 `CLAUDE.md`。
-  - 新增交互式引导脚本 `setup_my_agent.py`（支持 `--answers` 非交互模式，幂等不覆盖）。
-- 归档入口更新：本仓库 skill 已收入 `E:\SkillsHub`（含各 agent 本地已装副本）。
+- 新增 `skills/my-first-agent/`：零依赖、三步循环的新手版，含交互式引导脚本。
 
 ### 2026-10-10
 
-- 修正 MCP 包名：Playwright `playwright-mcp` → `@playwright/mcp`；Brave 标注为已停止维护；补充 GitHub 官方远程 MCP。
-- `SKILL.md` 补齐 `license` / `compatibility` / `metadata` 字段，description 增加中文触发词。
-- 新增 8 条硬规则（先读上下文、先查证、区分事实与推断、验证命令优先、不编造来源等）与明确的 MCP 降级规则。
-- 新增 `scripts/init_project_memory.py`，一键初始化项目记忆层。
-- 消除双份维护：`skills/claude-code/dev-automation-mcp.md` 改为安装说明，流程只保留在标准 `SKILL.md`。
-- 新增 `LICENSE`（MIT，此前公共仓库无许可证）。
-- 文档补齐：路线图加阶段状态、安全文档加第三方 skill 审计、清理仓库命名决策残留。
-
-## 仓库定位
-
-这个仓库不是单一项目脚手架，而是个人 AI 开发操作系统的基础设施。
-
-它的目标是持续沉淀：
-
-- MCP 配置模板。
-- Skills 工作流。
-- 项目记忆模板。
-- 历史错误规避规则。
-- 审核清单。
-- 面向不同项目类型的自动化方法。
+- 修正 MCP 包名，`SKILL.md` 补齐标准字段与 8 条硬规则，新增项目记忆初始化脚本，补 `LICENSE`。
 
 ## License
 
