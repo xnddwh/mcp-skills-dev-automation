@@ -94,6 +94,8 @@ my-first-agent/
 
 ---
 
-**动手：** 打开本仓库的 `skills/my-first-agent/SKILL.md`，只读开头那一小段（`---` 包起来的部分）。你会看到它只有名字、一句描述、许可证这么几项。这就是一个 skill 在没被用到时，占的全部地方。
+🖐️ **必须亲手做：** 打开本仓库的 `skills/my-first-agent/SKILL.md`，只读开头那一小段（`---` 包起来的部分）。你会看到它只有名字、一句描述、许可证这么几项。这就是一个 skill 在没被用到时，占的全部地方。
+
+> 💡 顺手再找一个你装过的第三方 skill，把它的 `SKILL.md` 全文扫一遍、`scripts/` 里的脚本扫一眼。这一步不只是学习——那是你在确认它没夹带恶意指令。
 
 上一章：[02 Agent 是怎么工作的](./02-how-agent-works.md) ｜ 下一章：[04 搭出你的第一个 Agent](./04-build-your-first-agent.md)
