@@ -98,7 +98,7 @@ cp -R skills/my-first-agent ~/.claude/skills/my-first-agent
 
 ## 修订记录
 
-### 2026-10-11
+### 2026-10-10（三）
 
 - 仓库更名为 `rookie-agent-guide`，定位从「MCP + Skills 自动化」调整为「面向新手的入门指南」。
 - 新增 `docs/tutorials/` 八章教程体系，覆盖概念、原理、MCP 与 Skill、动手搭建、记忆与台账、常见坑、最佳实践、进阶；结论经 12 个来源交叉核对，清单在教程总览里。
