@@ -14,7 +14,10 @@
 |---|---|---|
 | [`docs/tutorials/`](./docs/tutorials/README.md) | 八章教程，从「Agent 是什么」讲到「什么时候该上框架」 | 想搞懂原理的人 |
 | [`docs/tutorials/practice/`](./docs/tutorials/practice/README.md) | 13 个分级练习，每个带场景、步骤、验收 | 想动手的人 |
+| [`prompt-playbook/`](./prompt-playbook/README.md) | 提示词规范 + 六类模板（冻结/例行/口令/诊断/建卡/结算）| 已经在用、但用得乱的人 |
 | [`skills/`](./skills/) | 两个遵循开放标准的 skill，新手版和完整版 | 直接要工具的人 |
+
+教程讲「为什么这么做」（心法），`prompt-playbook/` 讲「具体怎么组织」（兵器架）—— 两者互补不重复。上手之后如果觉得提示词用得不系统，从 prompt-playbook 的六个模板开始。
 
 教程的结论不是我自己拍脑袋。写了 20 个来源的交叉核对，共识和分歧都列在[教程总览](./docs/tutorials/README.md)里，你可以顺着链接自己去验证。教程正文用三种标记区分内容的可信赖程度：🖐️ 必须亲手做、🔬 必须自己验证、✅ AI 可代劳——这份清单本身就回答了「学 Agent 哪些事 AI 替代不了」。
 
@@ -40,6 +43,7 @@
 ### 文档体系
 
 - [Skill 分类与搭配推荐](./docs/SKILL-TAXONOMY.md) —— 按「作用对象」分四类，三步判类法，四套搭配方案。skill 装多了之后用得上。
+- [提示词优化规范](./prompt-playbook/README.md) —— 六类模板 + 七步流程 + 教程逐阶段映射，配套[模板库](./prompt-playbook/templates/)。
 - [INSTALL](./docs/INSTALL.md) / [FAQ](./docs/FAQ.md) —— 各 agent 的安装落点、MCP 配置、排错。
 - [SECURITY](./docs/SECURITY.md) / [ROADMAP](./docs/ROADMAP.md) / [REPO_SETUP](./docs/REPO_SETUP.md) —— 安全原则、成长路线、仓库约定。
 
